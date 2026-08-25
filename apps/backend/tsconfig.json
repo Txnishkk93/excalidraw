@@ -13,7 +13,8 @@
     "allowJs": true,
     // Node.js output
     "moduleResolution": "NodeNext",
-    "outDir": "dist",
+    "rootDir": "./src",
+    "outDir": "./dist",
     "verbatimModuleSyntax": true,
     "noEmit": false,
     // Best practices
