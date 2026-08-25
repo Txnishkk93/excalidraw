@@ -6,13 +6,14 @@
   "scripts": {
     "build": "tsc -b",
     "start": "node dist/index.js",
-    "dev": "bun run build && bun run dev"
+    "dev": "bun run build && bun run start"
   },
   "devDependencies": {
     "@types/bun": "latest",
     "typescript": "7.0.2"
   },
   "dependencies": {
+    "@repo/backend-common": "workspace:*",
     "@repo/typescript-config": "workspace:*",
     "@types/bcrypt": "^6.0.0",
     "@types/dotenv": "^8.2.3",

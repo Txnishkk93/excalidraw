@@ -13,6 +13,7 @@
     "apps/backend": {
       "name": "backend",
       "dependencies": {
+        "@repo/backend-common": "workspace:*",
         "@repo/typescript-config": "workspace:*",
         "@types/bcrypt": "^6.0.0",
         "@types/dotenv": "^8.2.3",
@@ -31,6 +32,7 @@
     "apps/ws": {
       "name": "ws",
       "dependencies": {
+        "@repo/backend-common": "workspace:*",
         "@repo/typescript-config": "workspace:*",
         "@types/dotenv": "^8.2.3",
         "@types/jsonwebtoken": "^9.0.10",
@@ -39,6 +41,17 @@
         "express": "^5.2.1",
         "jsonwebtoken": "^9.0.3",
         "ws": "^8.21.3",
+      },
+      "devDependencies": {
+        "@types/bun": "latest",
+        "typescript": "7.0.2",
+      },
+    },
+    "packages/backend-common": {
+      "name": "@repo/backend-common",
+      "version": "0.0.0",
+      "dependencies": {
+        "@repo/typescript-config": "workspace:*",
       },
       "devDependencies": {
         "@types/bun": "latest",
@@ -159,6 +172,8 @@
     "@nodelib/fs.stat": ["@nodelib/fs.stat@2.0.5", "", {}, "sha512-RkhPPp2zrqDAQA/2jNhnztcPAlv64XdhIp7a7454A5ovI7Bukxgt7MX7udwAu3zg1DcpPU0rz3VV1SeaqvY4+A=="],
 
     "@nodelib/fs.walk": ["@nodelib/fs.walk@1.2.8", "", { "dependencies": { "@nodelib/fs.scandir": "2.1.5", "fastq": "^1.6.0" } }, "sha512-oGB+UxlgWcgQkgwo8GcEGwemoTFt3FIO9ababBmaGwXIoBKZ+GTy0pP185beGg7Llih/NSHSV2XAs1lnznocSg=="],
+
+    "@repo/backend-common": ["@repo/backend-common@workspace:packages/backend-common"],
 
     "@repo/eslint-config": ["@repo/eslint-config@workspace:packages/eslint-config"],
 

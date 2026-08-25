@@ -1,9 +1,10 @@
 import express from "express";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import dotenv from "dotenv";
 import { AuthMiddleware } from "./middlewares/AuthMiddleware.js";
-dotenv.config();
+import { JWT_SECRET } from "@repo/backend-common/config.js";
+
+
 const app = express();
 const userId = 1;
 

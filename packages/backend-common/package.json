@@ -1,0 +1,25 @@
+{
+  "name": "@repo/backend-common",
+  "module": "config.ts",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./config.js": {
+      "types": "./dist/config.d.ts",
+      "import": "./dist/config.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -b",
+    "start": "node dist/config.js",
+    "dev": "bun run build && bun run start"
+  },
+  "dependencies": {
+    "@repo/typescript-config": "workspace:*"
+  },
+  "devDependencies": {
+    "typescript": "7.0.2",
+    "@types/bun": "latest"
+  }
+}
