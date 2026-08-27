@@ -1,10 +1,12 @@
 import express from "express";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import {PrismaClient} from "@prisma/client"
 import { AuthMiddleware } from "./middlewares/AuthMiddleware.js";
 import { JWT_SECRET } from "@repo/backend-common/config.js";
 
 
+const prisma = new PrismaClient();
 const app = express();
 const userId = 1;
 
@@ -53,7 +55,7 @@ app.post("/api/v1/signin", async (req, res) => {
             });
         }
 
-        const existingUser = await prisma.user.findunique({
+        const existingUser = await prisma.user.findUnique({
             where: {
                 email,
                 password

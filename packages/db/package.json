@@ -3,11 +3,15 @@
   "module": "index.ts",
   "type": "module",
   "private": true,
+  "exports": {
+    "./client": "./src/index.ts"
+  },
   "devDependencies": {
     "@types/bun": "latest",
     "typescript": "7.0.2"
   },
   "dependencies": {
+    "@prisma/client": "^7.10.0",
     "dotenv": "^17.4.2",
     "prisma": "7.10.0"
   },
