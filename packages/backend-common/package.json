@@ -16,7 +16,8 @@
     "dev": "bun run build && bun run start"
   },
   "dependencies": {
-    "@repo/typescript-config": "workspace:*"
+    "@repo/typescript-config": "workspace:*",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
     "typescript": "7.0.2",
