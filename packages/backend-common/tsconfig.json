@@ -13,5 +13,5 @@
     "verbatimModuleSyntax": true,
     "noEmit": false
   },
-  "include": ["src/config.ts"]
+  "include": ["src/**/*.ts"]
 }

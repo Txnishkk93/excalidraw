@@ -13,8 +13,9 @@
     "typescript": "7.0.2"
   },
   "dependencies": {
-    "@repo/backend-common": "workspace:*",
     "@prisma/client": "7.10.0",
+    "@repo/backend-common": "workspace:*",
+    "@repo/db": "workspace:*",
     "@repo/typescript-config": "workspace:*",
     "@types/bcrypt": "^6.0.0",
     "@types/dotenv": "^8.2.3",
@@ -23,6 +24,7 @@
     "bcrypt": "^6.0.0",
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
-    "jsonwebtoken": "^9.0.3"
+    "jsonwebtoken": "^9.0.3",
+    "zod": "^4.4.3"
   }
 }

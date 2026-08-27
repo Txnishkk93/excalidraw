@@ -1,10 +1,11 @@
+import { parse } from "dotenv";
 import { WebSocketServer, WebSocket } from "ws";
 import jwt, { type JwtPayload } from "jsonwebtoken";
 import { JWT_SECRET } from "@repo/backend-common/config.js";
-import { parse } from "dotenv";
+import { prismaClient } from "@repo/db/client";
 
+const prisma=prismaClient;
 const wss = new WebSocketServer({ port: 8080 });
-
 interface User {
     socket: WebSocket,
     roomId: string

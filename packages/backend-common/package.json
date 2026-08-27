@@ -8,6 +8,10 @@
     "./config.js": {
       "types": "./dist/config.d.ts",
       "import": "./dist/config.js"
+    },
+    "./types.js": {
+      "types": "./dist/types.d.ts",
+      "import": "./dist/types.js"
     }
   },
   "scripts": {

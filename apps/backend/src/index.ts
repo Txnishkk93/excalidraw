@@ -1,25 +1,25 @@
 import express from "express";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import {PrismaClient} from "@prisma/client"
-import { AuthMiddleware } from "./middlewares/AuthMiddleware.js";
+import { prismaClient } from "@repo/db/client";
 import { JWT_SECRET } from "@repo/backend-common/config.js";
+import { SignupSchema, SigninSchema } from "@repo/backend-common/types.js";
 
-
-const prisma = new PrismaClient();
+const prisma = prismaClient;
 const app = express();
-const userId = 1;
+app.use(express.json());
 
 
 app.post("/api/v1/signup",  async (req, res) => {
     try {
-        const { username, email, password } = req.body;
-
-        if (!username || !email || !password) {
+        const parsed = SignupSchema.safeParse(req.body);
+        if (!parsed.success) {
             return res.status(400).json({
-                message: "All details required"
+                message: "Invalid signup details",
+                errors: parsed.error.flatten().fieldErrors,
             });
         }
+        const { username, email, password } = parsed.data;
 
         const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -29,8 +29,8 @@ app.post("/api/v1/signup",  async (req, res) => {
             }
         })
         const token = jwt.sign({
-            userId
-        }, process.env.JWT_SECRET as string, { expiresIn: '7d' })
+            userId:user.id
+        }, JWT_SECRET, { expiresIn: "7d" });
 
         return res.status(201).json({
             message: "Signup successfully",
@@ -47,26 +47,29 @@ app.post("/api/v1/signup",  async (req, res) => {
 
 app.post("/api/v1/signin", async (req, res) => {
     try {
-        const { email, password } = req.body;
-
-        if (!email || !password) {
+        const parsed = SigninSchema.safeParse(req.body);
+        if (!parsed.success) {
             return res.status(400).json({
-                message: "All details required"
+                message: "Invalid signin details",
+                errors: parsed.error.flatten().fieldErrors,
             });
         }
+        const { email, password } = parsed.data;
 
         const existingUser = await prisma.user.findUnique({
             where: {
-                email,
-                password
+                email
             }
         });
 
-        if (!existingUser) {
+        if (!existingUser || !(await bcrypt.compare(password, existingUser.password))) {
             return res.status(404).json({
                 message: "User does not exist"
             });
         }
+
+        const token = jwt.sign({ userId: existingUser.id }, JWT_SECRET, { expiresIn: "7d" });
+        return res.status(200).json({ token });
 
     } catch (error) {
         console.log(error);
