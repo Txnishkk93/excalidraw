@@ -3,14 +3,14 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { prismaClient } from "@repo/db/client";
 import { JWT_SECRET } from "@repo/backend-common/config.js";
-import { SignupSchema, SigninSchema } from "@repo/backend-common/types.js";
+import { SignupSchema, SigninSchema, CreateUserSchema } from "@repo/backend-common/types.js";
 
 const prisma = prismaClient;
 const app = express();
 app.use(express.json());
 
 
-app.post("/api/v1/signup",  async (req, res) => {
+app.post("/api/v1/signup", async (req, res) => {
     try {
         const parsed = SignupSchema.safeParse(req.body);
         if (!parsed.success) {
@@ -29,7 +29,7 @@ app.post("/api/v1/signup",  async (req, res) => {
             }
         })
         const token = jwt.sign({
-            userId:user.id
+            userId: user.id
         }, JWT_SECRET, { expiresIn: "7d" });
 
         return res.status(201).json({
@@ -80,7 +80,34 @@ app.post("/api/v1/signin", async (req, res) => {
 });
 
 app.post("/api/v1/room", async (req, res) => {
-    
-})
+
+    const paresedData = CreateUserSchema.safeParse(req.body);
+    if (!paresedData.success) {
+        return res.status(404).json({
+            message: "Incorrect inputs"
+        });
+        return;
+    }
+    //@ts-ignore
+    const userId = req.userId;
+
+    try {
+        const room = await prisma.room.create({
+            data: {
+                slug: paresedData.data.username,
+                adminId: userId
+            }
+        })
+
+        return res.status(201).json({
+            message: "Success",
+            roomId: room.id
+        })
+    } catch (error) {
+        return res.status(411).json({
+            message: "Room name already exists"
+        });
+    }
+});
 
 app.listen(3000)
