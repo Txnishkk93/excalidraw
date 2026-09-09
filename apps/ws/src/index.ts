@@ -12,7 +12,6 @@ interface User {
 }
 
 const users: User[] = [];
-// const allScoket: User[] = [];
 
 function checkUser(token: string): number | null {
     try {
@@ -111,29 +110,3 @@ wss.on("connection", (ws, request) => {
         }
     });
 });
-
-// wss.on("connection", (socket) => {
-//     socket.on("message", (message) => {
-//         const parsedMessage = JSON.parse(message.toString());
-//         if (parsedMessage.type === 'join') {
-//             allScoket.push({
-//                 socket,
-//                 roomId: parsedMessage.payload.roomId
-//             })
-//         }
-//         if (parsedMessage.type === 'chat') {
-//             let currentUserRoom = null;
-//             for (let i = 0; i < allScoket.length; i++) {
-//                 currentUserRoom = allScoket[i];
-//                 if (allScoket[i]?.socket == socket) {
-//                     currentUserRoom = allScoket[i]?.room
-//                 }
-//             }
-//             for (let i = 0; i < allScoket.length; i++) {
-//                 if (allScoket[i]?.room == currentUserRoom) {
-//                     allScoket[i]?.socket.send(parsedMessage);
-//                 }
-//             }
-//         }
-//     });
-// })
