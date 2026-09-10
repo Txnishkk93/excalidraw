@@ -1,26 +1,60 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  --color-nova-ink: #141414;
+  --color-nova-ink-soft: #262626;
+  --color-nova-muted: #707070;
+  --color-nova-faint: #adadad;
+  --color-nova-canvas: #ffffff;
+  --color-nova-canvas-soft: #f3f3f3;
+  --color-nova-field: #f0f0f0;
+  --color-nova-hairline: #e0e0e0;
+  --color-nova-accent: #0066ff;
+  
+  --color-nova-dark-ink: #f0f0f0;
+  --color-nova-dark-ink-soft: #e0e0e0;
+  --color-nova-dark-muted: #adadad;
+  --color-nova-dark-faint: #707070;
+  --color-nova-dark-canvas: #141414;
+  --color-nova-dark-canvas-soft: #262626;
+  --color-nova-dark-field: #333333;
+  --color-nova-dark-hairline: #404040;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --bg-color: var(--color-nova-canvas);
+    --text-color: var(--color-nova-ink);
+    --bg-soft: var(--color-nova-canvas-soft);
+    --border-color: var(--color-nova-hairline);
+    --field-color: var(--color-nova-field);
+    --muted-color: var(--color-nova-muted);
+  }
+
+  .dark {
+    --bg-color: var(--color-nova-dark-canvas);
+    --text-color: var(--color-nova-dark-ink);
+    --bg-soft: var(--color-nova-dark-canvas-soft);
+    --border-color: var(--color-nova-dark-hairline);
+    --field-color: var(--color-nova-dark-field);
+    --muted-color: var(--color-nova-dark-muted);
+  }
+
+  body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: ui-sans-serif, system-ui, sans-serif;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer utilities {
+  .radius-card {
+    border-radius: 24px;
+  }
+  .radius-container {
+    border-radius: 16px;
+  }
+  .radius-pill {
+    border-radius: 9999px;
+  }
 }

@@ -64,6 +64,14 @@ wss.on("connection", (ws, request) => {
             return;
         }
 
+        const broadcastToRoom = (roomId: number, excludeWs: WebSocket, messageObj: any) => {
+            users.forEach((recipient) => {
+                if (recipient.rooms.includes(roomId) && recipient.ws !== excludeWs) {
+                    recipient.ws.send(JSON.stringify(messageObj));
+                }
+            });
+        };
+
         if (parsedData.type === "join_room") {
             const roomId = Number(parsedData.roomId);
             if (Number.isInteger(roomId) && !user.rooms.includes(roomId)) {
@@ -91,15 +99,33 @@ wss.on("connection", (ws, request) => {
                 }
             });
 
-            users.forEach((recipient) => {
-                if (recipient.rooms.includes(roomId)) {
-                    recipient.ws.send(JSON.stringify({
-                        type: "chat",
-                        message,
-                        roomId
-                    }));
-                }
+            broadcastToRoom(roomId, ws, {
+                type: "chat",
+                message,
+                roomId,
+                userId
             });
+        }
+
+        if (parsedData.type === "element_update" || parsedData.type === "element_create" || parsedData.type === "element_delete" || parsedData.type === "canvas_update") {
+            const roomId = Number(parsedData.roomId);
+            if (!Number.isInteger(roomId)) return;
+            broadcastToRoom(roomId, ws, {
+                ...parsedData,
+                userId
+            });
+        }
+
+        if (parsedData.type === "cursor_move") {
+             const roomId = Number(parsedData.roomId);
+             if (!Number.isInteger(roomId)) return;
+             broadcastToRoom(roomId, ws, {
+                type: "cursor_move",
+                roomId,
+                userId: user.userId,
+                x: (parsedData as any).x,
+                y: (parsedData as any).y
+             });
         }
     });
 

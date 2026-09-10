@@ -18,13 +18,25 @@ model User {
 }
 
 model Room {
-    id        Int      @id @default(autoincrement())
-    slug      String   @unique
+    id              Int       @id @default(autoincrement())
+    slug            String    @unique
+    title           String?
+    backgroundColor String?   @default("#ffffff")
+    createdAt       DateTime  @default(now())
+    updatedAt       DateTime  @updatedAt
+    adminId         Int
+    admin           User      @relation(fields: [adminId], references: [id])
+    chats           Chat[]
+    elements        Element[]
+}
+
+model Element {
+    id        String   @id // Client-generated UUID
+    roomId    Int
+    room      Room     @relation(fields: [roomId], references: [id])
+    data      Json
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
-    adminId   Int
-    admin     User     @relation(fields: [adminId], references: [id])
-    chats     Chat[]
 }
 
 model Chat {

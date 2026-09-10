@@ -6,10 +6,11 @@
   "scripts": {
     "build": "tsc -b",
     "start": "node dist/index.js",
-    "dev": "bun run build && bun run start"
+    "dev": "nodemon --watch src --ext ts --exec \"bun run build && bun run start\""
   },
   "devDependencies": {
     "@types/bun": "latest",
+    "nodemon": "^3.1.14",
     "typescript": "7.0.2"
   },
   "dependencies": {
